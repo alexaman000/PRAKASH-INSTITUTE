@@ -145,6 +145,11 @@ function App() {
     "email": "prakash96089kumar@gmail.com",
     "url": "https://www.prakashinstituteranchi.online",
     "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800&h=600",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 23.4028075,
+      "longitude": 85.3780167
+    },
     "priceRange": "₹₹",
     "areaServed": [
       "RTC School area",
@@ -554,9 +559,10 @@ function App() {
             <div className="map-container">
               <iframe 
                 title="Prakash Institute Location Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14652.548487770851!2d85.349692!3d23.418706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e3c155555555%3A0x1234567890abcdef!2sBooti%20More%2C%20Ranchi%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3661.5965717010554!2d85.3780167!3d23.402807499999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e3bbd5a07adb%3A0xe7fcfff8676bf00a!2sPrakash%20Institute!5e0!3m2!1sen!2sin!4v1779091589377!5m2!1sen!2sin" 
                 allowFullScreen="" 
-                loading="lazy">
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade">
               </iframe>
             </div>
           </div>
