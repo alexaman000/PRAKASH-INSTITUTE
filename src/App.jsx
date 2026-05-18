@@ -4,7 +4,8 @@ import {
   FaBookReader, FaChalkboardTeacher, FaUserGraduate, FaLaptopCode, 
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp, 
   FaInstagram, FaFacebookF, FaYoutube, FaBars, FaTimes, FaLinkedinIn,
-  FaCheckCircle, FaChevronDown, FaChevronUp, FaStar, FaMapSigns
+  FaCheckCircle, FaChevronDown, FaChevronUp, FaStar, FaMapSigns,
+  FaPlus, FaTrash, FaSignOutAlt, FaLock, FaChevronRight, FaHome, FaTachometerAlt
 } from 'react-icons/fa';
 import './App.css';
 
@@ -31,6 +32,105 @@ const CountUp = ({ end, duration = 2, suffix = "" }) => {
   return <span>{count}{suffix}</span>;
 };
 
+// Default initial states
+const defaultCourses = [
+  {
+    id: 'foundation',
+    title: 'Foundation Courses',
+    icon: 'FaBookReader',
+    desc: 'Building a strong base for future competitive exams from early classes.',
+    features: ['Concept Clarity', 'Olympiad Prep', 'Regular Assessments']
+  },
+  {
+    id: 'boards',
+    title: 'Class 8-12 & AL Coaching',
+    icon: 'FaChalkboardTeacher',
+    desc: 'Comprehensive syllabus coverage to excel in board examinations.',
+    features: ['NCERT Focus', 'Doubt Sessions', 'Mock Tests']
+  },
+  {
+    id: 'iit-jee',
+    title: 'IIT-JEE & NEET Prep',
+    icon: 'FaLaptopCode',
+    desc: 'Intensive coaching with expert strategies for top engineering & medical entrance.',
+    features: ['Expert Faculty', 'Advanced Study Material', 'Test Series']
+  },
+  {
+    id: 'commerce',
+    title: 'Commerce & GATE',
+    icon: 'FaUserGraduate',
+    desc: 'Specialized batches for Commerce students and GATE aspirants.',
+    features: ['Industry Experts', 'Practical Approach', 'Career Guidance']
+  }
+];
+
+const defaultAchievers = [
+  { name: 'Manjeet Deep', exam: 'Board Exam - 93.4%', img: '/assets/student_1.png' },
+  { name: 'Nitin Ranjan', exam: 'Board Exam - 92.0%', img: '/assets/student_2.png' },
+  { name: 'Rishu Kumar', exam: 'Board Exam - 92.0%', img: '/assets/student_3.png' },
+  { name: 'Ayush Gupta', exam: 'Board Exam - 92.0%', img: '/assets/student_4.png' },
+  { name: 'Ranjeet Baitha', exam: 'Board Exam - 89.0%', img: '/assets/student_5.png' },
+  { name: 'Ashish Ranjan', exam: 'Board Exam - 88.0%', img: '/assets/student_6.png' },
+  { name: 'Sonu Sahu', exam: 'Board Exam - 87.0%', img: '/assets/student_7.png' },
+  { name: 'Manish Mahto', exam: 'Board Exam - 85.0%', img: '/assets/student_8.png' }
+];
+
+const defaultFaculty = [
+  { name: 'Prakash Sir', qual: 'B.Tech / M.Tech & GATE Qualified', subject: 'Founder & Senior Mathematics Specialist', img: '/assets/prakash_sir.png' },
+  { name: 'Sagar Sir', qual: 'M.Sc in Mathematics & B.Ed', subject: 'Co-Founder & Science / Mathematics Faculty', img: '/assets/sagar_sir.png' }
+];
+
+const defaultPosters = [
+  {
+    src: "/assets/poster_achievers.jpg",
+    title: "Our Star Achievers & Top Rankers",
+    subtitle: "Celebrating outstanding scores in board exams and competitive selections. Expert guidance by Prakash Sir and Sagar Sir.",
+    tag: "Achievers Batch"
+  },
+  {
+    src: "/assets/poster_courses.jpg",
+    title: "IIT-JEE / NEET / Foundation & Commerce Batches",
+    subtitle: "Comprehensive curriculum coverage for Class 6th to 12th, Olympiad Prep, Spoken English, and C/C++ classes.",
+    tag: "All Courses"
+  },
+  {
+    src: "/assets/poster_hometuition.jpg",
+    title: "Specialized Home Tuition Services in Ranchi",
+    subtitle: "Personalized home tutoring for Class 11-12 Maths (Board & JEE) and Class 9-10 Maths & Science. 10+ years expert experience.",
+    tag: "Home Tuition"
+  },
+  {
+    src: "/assets/celebration_1.png",
+    title: "Saraswati Puja Celebrations 2026",
+    subtitle: "Prakash Sir, Sagar Sir, and faculty members celebrating Vasant Panchami with divine prayers for our students' success.",
+    tag: "Events & Culture"
+  },
+  {
+    src: "/assets/celebration_2.png",
+    title: "Worshipping the Goddess of Learning",
+    subtitle: "Prakash Institute students and teachers gathered together to seek the blessings of Goddess Saraswati on this auspicious day.",
+    tag: "Puja Celebrations"
+  }
+];
+
+const defaultEnquiryCourses = [
+  { label: "Class 11-12 Mathematics (JEE/Board)", value: "Class 11-12 Maths" },
+  { label: "Class 9-10 Mathematics & Science", value: "Class 9-10 Maths-Science" },
+  { label: "IIT-JEE & NEET Focus Batches", value: "IIT-JEE NEET" },
+  { label: "Olympiad & Foundation (Class 6-8)", value: "Foundation Class 6-8" },
+  { label: "Spoken English & C/C++ Classes", value: "English and Coding" }
+];
+
+const getIcon = (iconName) => {
+  const iconMap = {
+    'FaBookReader': <FaBookReader />,
+    'FaChalkboardTeacher': <FaChalkboardTeacher />,
+    'FaLaptopCode': <FaLaptopCode />,
+    'FaUserGraduate': <FaUserGraduate />
+  };
+  return iconMap[iconName] || <FaBookReader />;
+};
+
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -38,6 +138,232 @@ function App() {
   const [currentPoster, setCurrentPoster] = useState(0);
   const [lightboxImage, setLightboxImage] = useState(null);
 
+  // Dynamic lists from localStorage
+  const [courses, setCourses] = useState(() => {
+    const saved = localStorage.getItem('pk_courses');
+    return saved ? JSON.parse(saved) : defaultCourses;
+  });
+
+  const [achievers, setAchievers] = useState(() => {
+    const saved = localStorage.getItem('pk_achievers');
+    return saved ? JSON.parse(saved) : defaultAchievers;
+  });
+
+  const [faculty, setFaculty] = useState(() => {
+    const saved = localStorage.getItem('pk_faculty');
+    return saved ? JSON.parse(saved) : defaultFaculty;
+  });
+
+  const [posters, setPosters] = useState(() => {
+    const saved = localStorage.getItem('pk_posters');
+    return saved ? JSON.parse(saved) : defaultPosters;
+  });
+
+  const [enquiryCourses, setEnquiryCourses] = useState(() => {
+    const saved = localStorage.getItem('pk_enquiry_courses');
+    return saved ? JSON.parse(saved) : defaultEnquiryCourses;
+  });
+
+  // Keep localStorage in sync
+  useEffect(() => {
+    localStorage.setItem('pk_courses', JSON.stringify(courses));
+  }, [courses]);
+
+  useEffect(() => {
+    localStorage.setItem('pk_achievers', JSON.stringify(achievers));
+  }, [achievers]);
+
+  useEffect(() => {
+    localStorage.setItem('pk_faculty', JSON.stringify(faculty));
+  }, [faculty]);
+
+  useEffect(() => {
+    localStorage.setItem('pk_posters', JSON.stringify(posters));
+  }, [posters]);
+
+  useEffect(() => {
+    localStorage.setItem('pk_enquiry_courses', JSON.stringify(enquiryCourses));
+  }, [enquiryCourses]);
+
+  // Route interception
+  const [isAdminRoute, setIsAdminRoute] = useState(
+    window.location.pathname === '/admin' || window.location.hash === '#/admin' || window.location.hash === '#admin'
+  );
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setIsAdminRoute(
+        window.location.pathname === '/admin' || window.location.hash === '#/admin' || window.location.hash === '#admin'
+      );
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+
+    const interval = setInterval(handleLocationChange, 300);
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // Admin Auth States
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    sessionStorage.getItem('pk_admin_auth') === 'true'
+  );
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (adminEmail === 'prakash96089kumar@gmail.com' && adminPassword === 'pksir96089') {
+      sessionStorage.setItem('pk_admin_auth', 'true');
+      setIsAuthenticated(true);
+      setLoginError('');
+    } else {
+      setLoginError('Invalid Admin ID or Password. Access Denied.');
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('pk_admin_auth');
+    setIsAuthenticated(false);
+  };
+
+  // Admin tab navigation
+  const [adminTab, setAdminTab] = useState('notices');
+
+  // Input states for Admin forms
+  const [newPosterSrc, setNewPosterSrc] = useState('');
+  const [newPosterTitle, setNewPosterTitle] = useState('');
+  const [newPosterSubtitle, setNewPosterSubtitle] = useState('');
+  const [newPosterTag, setNewPosterTag] = useState('');
+
+  const [newCourseId, setNewCourseId] = useState('');
+  const [newCourseTitle, setNewCourseTitle] = useState('');
+  const [newCourseIcon, setNewCourseIcon] = useState('FaBookReader');
+  const [newCourseDesc, setNewCourseDesc] = useState('');
+  const [newCourseFeatures, setNewCourseFeatures] = useState('');
+
+  const [newFacultyName, setNewFacultyName] = useState('');
+  const [newFacultyQual, setNewFacultyQual] = useState('');
+  const [newFacultySubject, setNewFacultySubject] = useState('');
+  const [newFacultyImg, setNewFacultyImg] = useState('');
+
+  const [newAchieverName, setNewAchieverName] = useState('');
+  const [newAchieverExam, setNewAchieverExam] = useState('');
+  const [newAchieverImg, setNewAchieverImg] = useState('');
+
+  const [newOptionValue, setNewOptionValue] = useState('');
+  const [newOptionLabel, setNewOptionLabel] = useState('');
+
+  // CRUD operations
+  const addPoster = (e) => {
+    e.preventDefault();
+    if (!newPosterSrc || !newPosterTitle || !newPosterSubtitle || !newPosterTag) return;
+    const newSlide = {
+      src: newPosterSrc,
+      title: newPosterTitle,
+      subtitle: newPosterSubtitle,
+      tag: newPosterTag
+    };
+    setPosters([...posters, newSlide]);
+    setNewPosterSrc('');
+    setNewPosterTitle('');
+    setNewPosterSubtitle('');
+    setNewPosterTag('');
+  };
+
+  const removePoster = (index) => {
+    const updated = posters.filter((_, i) => i !== index);
+    setPosters(updated);
+    if (currentPoster >= updated.length) {
+      setCurrentPoster(Math.max(0, updated.length - 1));
+    }
+  };
+
+  const addCourse = (e) => {
+    e.preventDefault();
+    if (!newCourseTitle || !newCourseDesc || !newCourseFeatures) return;
+    const feats = newCourseFeatures.split(',').map(f => f.trim()).filter(Boolean);
+    const newId = newCourseId.trim().toLowerCase().replace(/\s+/g, '-') || `course-${Date.now()}`;
+    const newC = {
+      id: newId,
+      title: newCourseTitle,
+      icon: newCourseIcon,
+      desc: newCourseDesc,
+      features: feats
+    };
+    setCourses([...courses, newC]);
+    setNewCourseTitle('');
+    setNewCourseDesc('');
+    setNewCourseFeatures('');
+    setNewCourseId('');
+  };
+
+  const removeCourse = (index) => {
+    setCourses(courses.filter((_, i) => i !== index));
+  };
+
+  const addFaculty = (e) => {
+    e.preventDefault();
+    if (!newFacultyName || !newFacultyQual || !newFacultySubject) return;
+    const newF = {
+      name: newFacultyName,
+      qual: newFacultyQual,
+      subject: newFacultySubject,
+      img: newFacultyImg || ''
+    };
+    setFaculty([...faculty, newF]);
+    setNewFacultyName('');
+    setNewFacultyQual('');
+    setNewFacultySubject('');
+    setNewFacultyImg('');
+  };
+
+  const removeFaculty = (index) => {
+    setFaculty(faculty.filter((_, i) => i !== index));
+  };
+
+  const addAchiever = (e) => {
+    e.preventDefault();
+    if (!newAchieverName || !newAchieverExam) return;
+    const newA = {
+      name: newAchieverName,
+      exam: newAchieverExam,
+      img: newAchieverImg || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=300&h=150'
+    };
+    setAchievers([...achievers, newA]);
+    setNewAchieverName('');
+    setNewAchieverExam('');
+    setNewAchieverImg('');
+  };
+
+  const removeAchiever = (index) => {
+    setAchievers(achievers.filter((_, i) => i !== index));
+  };
+
+  const addOption = (e) => {
+    e.preventDefault();
+    if (!newOptionLabel) return;
+    const val = newOptionValue.trim() || newOptionLabel.trim().toLowerCase().replace(/\s+/g, '-');
+    const newOpt = {
+      label: newOptionLabel,
+      value: val
+    };
+    setEnquiryCourses([...enquiryCourses, newOpt]);
+    setNewOptionLabel('');
+    setNewOptionValue('');
+  };
+
+  const removeOption = (index) => {
+    setEnquiryCourses(enquiryCourses.filter((_, i) => i !== index));
+  };
+
+  // Scroll handler
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -46,12 +372,14 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Slide rotation
   useEffect(() => {
+    if (!posters || posters.length === 0) return;
     const interval = setInterval(() => {
       setCurrentPoster((prev) => (prev + 1) % posters.length);
-    }, 4500); // changes every 4.5 seconds
+    }, 4500);
     return () => clearInterval(interval);
-  }, []);
+  }, [posters]);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -70,86 +398,6 @@ function App() {
       transition: { staggerChildren: 0.2 }
     }
   };
-
-  const courses = [
-    {
-      id: 'foundation',
-      title: 'Foundation Courses',
-      icon: <FaBookReader />,
-      desc: 'Building a strong base for future competitive exams from early classes.',
-      features: ['Concept Clarity', 'Olympiad Prep', 'Regular Assessments']
-    },
-    {
-      id: 'boards',
-      title: 'Class 8-12 & AL Coaching',
-      icon: <FaChalkboardTeacher />,
-      desc: 'Comprehensive syllabus coverage to excel in board examinations.',
-      features: ['NCERT Focus', 'Doubt Sessions', 'Mock Tests']
-    },
-    {
-      id: 'iit-jee',
-      title: 'IIT-JEE & NEET Prep',
-      icon: <FaLaptopCode />,
-      desc: 'Intensive coaching with expert strategies for top engineering & medical entrance.',
-      features: ['Expert Faculty', 'Advanced Study Material', 'Test Series']
-    },
-    {
-      id: 'commerce',
-      title: 'Commerce & GATE',
-      icon: <FaUserGraduate />,
-      desc: 'Specialized batches for Commerce students and GATE aspirants.',
-      features: ['Industry Experts', 'Practical Approach', 'Career Guidance']
-    }
-  ];
-
-  const achievers = [
-    { name: 'Manjeet Deep', exam: 'Board Exam - 93.4%', img: '/assets/student_1.png' },
-    { name: 'Nitin Ranjan', exam: 'Board Exam - 92.0%', img: '/assets/student_2.png' },
-    { name: 'Rishu Kumar', exam: 'Board Exam - 92.0%', img: '/assets/student_3.png' },
-    { name: 'Ayush Gupta', exam: 'Board Exam - 92.0%', img: '/assets/student_4.png' },
-    { name: 'Ranjeet Baitha', exam: 'Board Exam - 89.0%', img: '/assets/student_5.png' },
-    { name: 'Ashish Ranjan', exam: 'Board Exam - 88.0%', img: '/assets/student_6.png' },
-    { name: 'Sonu Sahu', exam: 'Board Exam - 87.0%', img: '/assets/student_7.png' },
-    { name: 'Manish Mahto', exam: 'Board Exam - 85.0%', img: '/assets/student_8.png' }
-  ];
-
-  const faculty = [
-    { name: 'Prakash Sir', qual: 'B.Tech / M.Tech & GATE Qualified', subject: 'Founder & Senior Mathematics Specialist', img: '/assets/prakash_sir.png' },
-    { name: 'Sagar Sir', qual: 'M.Sc in Mathematics & B.Ed', subject: 'Co-Founder & Science / Mathematics Faculty', img: '/assets/sagar_sir.png' }
-  ];
-
-  const posters = [
-    {
-      src: "/assets/poster_achievers.jpg",
-      title: "Our Star Achievers & Top Rankers",
-      subtitle: "Celebrating outstanding scores in board exams and competitive selections. Expert guidance by Prakash Sir and Sagar Sir.",
-      tag: "Achievers Batch"
-    },
-    {
-      src: "/assets/poster_courses.jpg",
-      title: "IIT-JEE / NEET / Foundation & Commerce Batches",
-      subtitle: "Comprehensive curriculum coverage for Class 6th to 12th, Olympiad Prep, Spoken English, and C/C++ classes.",
-      tag: "All Courses"
-    },
-    {
-      src: "/assets/poster_hometuition.jpg",
-      title: "Specialized Home Tuition Services in Ranchi",
-      subtitle: "Personalized home tutoring for Class 11-12 Maths (Board & JEE) and Class 9-10 Maths & Science. 10+ years expert experience.",
-      tag: "Home Tuition"
-    },
-    {
-      src: "/assets/celebration_1.png",
-      title: "Saraswati Puja Celebrations 2026",
-      subtitle: "Prakash Sir, Sagar Sir, and faculty members celebrating Vasant Panchami with divine prayers for our students' success.",
-      tag: "Events & Culture"
-    },
-    {
-      src: "/assets/celebration_2.png",
-      title: "Worshipping the Goddess of Learning",
-      subtitle: "Prakash Institute students and teachers gathered together to seek the blessings of Goddess Saraswati on this auspicious day.",
-      tag: "Puja Celebrations"
-    }
-  ];
 
   const faqs = [
     {
@@ -245,6 +493,476 @@ function App() {
     const text = `Hello Prakash Sir,%0A%0AI want to enquire about coaching.%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course Interested:* ${course}%0A*Message:* ${message}`;
     window.open(`https://wa.me/917903631674?text=${text}`, '_blank');
   };
+
+  if (isAdminRoute) {
+    if (!isAuthenticated) {
+      return (
+        <div className="admin-login-container">
+          <div className="admin-login-card">
+            <div className="admin-login-header">
+              <h2>Admin Panel</h2>
+              <p>Prakash Institute Ranchi</p>
+            </div>
+            
+            {loginError && <div className="admin-error-msg">{loginError}</div>}
+            
+            <form onSubmit={handleLogin}>
+              <div className="admin-form-group">
+                <label>Admin ID / Email</label>
+                <input 
+                  type="email" 
+                  className="admin-form-input" 
+                  placeholder="prakash96089kumar@gmail.com" 
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  required 
+                />
+              </div>
+              
+              <div className="admin-form-group">
+                <label>Password</label>
+                <input 
+                  type="password" 
+                  className="admin-form-input" 
+                  placeholder="••••••••" 
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  required 
+                />
+              </div>
+              
+              <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
+                <FaLock style={{ marginRight: '0.5rem' }} /> Verify & Login
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="admin-dashboard">
+        <aside className="admin-sidebar">
+          <div className="admin-sidebar-header">
+            <div className="admin-sidebar-logo">
+              Prakash <span>Admin</span>
+            </div>
+          </div>
+          
+          <nav className="admin-nav">
+            <button 
+              className={`admin-nav-item ${adminTab === 'notices' ? 'active' : ''}`}
+              onClick={() => setAdminTab('notices')}
+            >
+              <FaBookReader /> Notice Board
+            </button>
+            <button 
+              className={`admin-nav-item ${adminTab === 'courses' ? 'active' : ''}`}
+              onClick={() => setAdminTab('courses')}
+            >
+              <FaChalkboardTeacher /> Courses
+            </button>
+            <button 
+              className={`admin-nav-item ${adminTab === 'faculty' ? 'active' : ''}`}
+              onClick={() => setAdminTab('faculty')}
+            >
+              <FaUserGraduate /> Faculty
+            </button>
+            <button 
+              className={`admin-nav-item ${adminTab === 'achievers' ? 'active' : ''}`}
+              onClick={() => setAdminTab('achievers')}
+            >
+              <FaStar /> Achievers
+            </button>
+            <button 
+              className={`admin-nav-item ${adminTab === 'enquiry_options' ? 'active' : ''}`}
+              onClick={() => setAdminTab('enquiry_options')}
+            >
+              <FaMapSigns /> Enquiry Options
+            </button>
+          </nav>
+          
+          <div className="admin-sidebar-footer">
+            <button className="admin-nav-item" onClick={handleLogout} style={{ color: '#fca5a5', width: '100%' }}>
+              <FaSignOutAlt /> Logout
+            </button>
+          </div>
+        </aside>
+
+        <main className="admin-main">
+          <header className="admin-header">
+            <h1>Prakash Institute Management Console</h1>
+            <a href="#" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FaHome /> Visit Site
+            </a>
+          </header>
+
+          {adminTab === 'notices' && (
+            <section className="admin-card">
+              <h2>Manage Notice Board & Announcements</h2>
+              <form onSubmit={addPoster} style={{ marginBottom: '2.5rem' }}>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Image Path / URL</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="/assets/poster_xyz.jpg or https://" 
+                      value={newPosterSrc}
+                      onChange={(e) => setNewPosterSrc(e.target.value)}
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Tag (e.g., Admission Open)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g., New Batch" 
+                      value={newPosterTag}
+                      onChange={(e) => setNewPosterTag(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Title</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Notice Title" 
+                      value={newPosterTitle}
+                      onChange={(e) => setNewPosterTitle(e.target.value)}
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Subtitle</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Details about the announcement" 
+                      value={newPosterSubtitle}
+                      onChange={(e) => setNewPosterSubtitle(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  <FaPlus /> Add Notice/Poster
+                </button>
+              </form>
+
+              <h3>Current Notices & Posters</h3>
+              <div className="admin-item-grid">
+                {posters.map((p, idx) => (
+                  <div key={idx} className="admin-item-card">
+                    <img src={p.src} alt={p.title} className="admin-item-img" style={{ maxHeight: '120px', objectFit: 'contain', background: '#1e293b' }} />
+                    <div className="admin-item-info">
+                      <span style={{ backgroundColor: 'var(--accent-orange)', color: 'white', padding: '0.1rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold' }}>{p.tag}</span>
+                      <h4 style={{ marginTop: '0.5rem' }}>{p.title}</h4>
+                      <p>{p.subtitle}</p>
+                    </div>
+                    <button className="admin-btn-danger" onClick={() => removePoster(idx)}>
+                      <FaTrash /> Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {adminTab === 'courses' && (
+            <section className="admin-card">
+              <h2>Manage Coaching Courses</h2>
+              <form onSubmit={addCourse} style={{ marginBottom: '2.5rem' }}>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Course ID (unique)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g. iit-jee-maths" 
+                      value={newCourseId}
+                      onChange={(e) => setNewCourseId(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Course Title</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="IIT-JEE Prep" 
+                      value={newCourseTitle}
+                      onChange={(e) => setNewCourseTitle(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Icon Type</label>
+                    <select 
+                      className="form-control" 
+                      value={newCourseIcon} 
+                      onChange={(e) => setNewCourseIcon(e.target.value)}
+                    >
+                      <option value="FaBookReader">Book / Reader</option>
+                      <option value="FaChalkboardTeacher">Teacher</option>
+                      <option value="FaLaptopCode">Coding / Computer</option>
+                      <option value="FaUserGraduate">Graduate</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Features (comma separated list)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="NCERT Focus, Mock Tests, Doubt Sessions" 
+                      value={newCourseFeatures}
+                      onChange={(e) => setNewCourseFeatures(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Course Description</label>
+                  <textarea 
+                    className="form-control" 
+                    rows="3" 
+                    placeholder="Provide a detailed description of the course..." 
+                    value={newCourseDesc}
+                    onChange={(e) => setNewCourseDesc(e.target.value)}
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  <FaPlus /> Add Course
+                </button>
+              </form>
+
+              <h3>Current Active Courses</h3>
+              <div className="admin-item-grid">
+                {courses.map((c, idx) => (
+                  <div key={c.id || idx} className="admin-item-card">
+                    <div className="admin-item-info">
+                      <h4>{c.title}</h4>
+                      <p style={{ fontStyle: 'italic', color: 'var(--accent-orange)', marginBottom: '0.5rem' }}>ID: {c.id}</p>
+                      <p>{c.desc}</p>
+                      <ul style={{ paddingLeft: '1.2rem', marginTop: '0.5rem', fontSize: '0.8rem' }}>
+                        {c.features.map((f, i) => <li key={i}>{f}</li>)}
+                      </ul>
+                    </div>
+                    <button className="admin-btn-danger" onClick={() => removeCourse(idx)}>
+                      <FaTrash /> Remove Course
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {adminTab === 'faculty' && (
+            <section className="admin-card">
+              <h2>Manage Faculty Members</h2>
+              <form onSubmit={addFaculty} style={{ marginBottom: '2.5rem' }}>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Faculty Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g. Prakash Sir" 
+                      value={newFacultyName}
+                      onChange={(e) => setNewFacultyName(e.target.value)}
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Qualifications</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="B.Tech, GATE Qualified" 
+                      value={newFacultyQual}
+                      onChange={(e) => setNewFacultyQual(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Role / Subject</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Founder & Senior Mathematics Faculty" 
+                      value={newFacultySubject}
+                      onChange={(e) => setNewFacultySubject(e.target.value)}
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Image Path / URL (Optional)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="/assets/prakash_sir.png" 
+                      value={newFacultyImg}
+                      onChange={(e) => setNewFacultyImg(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  <FaPlus /> Add Faculty Member
+                </button>
+              </form>
+
+              <h3>Current Faculty Members</h3>
+              <div className="admin-item-grid">
+                {faculty.map((f, idx) => (
+                  <div key={idx} className="admin-item-card">
+                    {f.img ? (
+                      <img src={f.img} alt={f.name} className="admin-item-img" style={{ maxHeight: '140px', objectFit: 'cover' }} />
+                    ) : (
+                      <div style={{ height: '140px', background: 'linear-gradient(135deg, #1c3b7b, #0b1c3c)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+                        {f.name.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                    <div className="admin-item-info">
+                      <h4>{f.name}</h4>
+                      <p style={{ fontWeight: '600', color: 'var(--accent-orange)' }}>{f.subject}</p>
+                      <p>{f.qual}</p>
+                    </div>
+                    <button 
+                      className="admin-btn-danger" 
+                      onClick={() => removeFaculty(idx)}
+                      disabled={f.name === 'Prakash Sir' || f.name === 'Sagar Sir'}
+                      style={{ opacity: (f.name === 'Prakash Sir' || f.name === 'Sagar Sir') ? 0.5 : 1, cursor: (f.name === 'Prakash Sir' || f.name === 'Sagar Sir') ? 'not-allowed' : 'pointer' }}
+                      title={(f.name === 'Prakash Sir' || f.name === 'Sagar Sir') ? "Cannot remove founding members" : "Remove faculty member"}
+                    >
+                      <FaTrash /> Remove Faculty
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {adminTab === 'achievers' && (
+            <section className="admin-card">
+              <h2>Manage Student Achievers</h2>
+              <form onSubmit={addAchiever} style={{ marginBottom: '2.5rem' }}>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Student Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g. Manjeet Deep" 
+                      value={newAchieverName}
+                      onChange={(e) => setNewAchieverName(e.target.value)}
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Exam / Score Details</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="Class 10th - 93.4% (Maths: 100)" 
+                      value={newAchieverExam}
+                      onChange={(e) => setNewAchieverExam(e.target.value)}
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Image Path / URL (Optional)</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    placeholder="/assets/student_1.png" 
+                    value={newAchieverImg}
+                    onChange={(e) => setNewAchieverImg(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  <FaPlus /> Add Achiever Student
+                </button>
+              </form>
+
+              <h3>Current Proud Achievers</h3>
+              <div className="admin-item-grid">
+                {achievers.map((a, idx) => (
+                  <div key={idx} className="admin-item-card">
+                    <img src={a.img} alt={a.name} className="admin-item-img" style={{ maxHeight: '140px', objectFit: 'cover' }} />
+                    <div className="admin-item-info">
+                      <h4>{a.name}</h4>
+                      <p style={{ color: 'var(--accent-orange)', fontWeight: 'bold' }}>{a.exam}</p>
+                    </div>
+                    <button className="admin-btn-danger" onClick={() => removeAchiever(idx)}>
+                      <FaTrash /> Remove Achiever
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {adminTab === 'enquiry_options' && (
+            <section className="admin-card">
+              <h2>Manage Extra Courses in Enquiry Dropdown</h2>
+              <form onSubmit={addOption} style={{ marginBottom: '2.5rem' }}>
+                <div className="admin-form-row">
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Course Option Label (Display Text)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g. Class 11-12 Mathematics (JEE/Board)" 
+                      value={newOptionLabel}
+                      onChange={(e) => setNewOptionLabel(e.target.value)}
+                      required 
+                  />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Course Option Value (Form Submissions)</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="e.g. Class 11-12 Maths" 
+                      value={newOptionValue}
+                      onChange={(e) => setNewOptionValue(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  <FaPlus /> Add Dropdown Option
+                </button>
+              </form>
+
+              <h3>Current Dropdown Options</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.5rem' }}>
+                {enquiryCourses.map((opt, idx) => (
+                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'white', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
+                    <div>
+                      <h4 style={{ margin: 0, color: 'var(--primary-blue)', fontWeight: 600 }}>{opt.label}</h4>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>Value: {opt.value}</p>
+                    </div>
+                    <button className="admin-btn-danger" onClick={() => removeOption(idx)} style={{ marginTop: 0 }}>
+                      <FaTrash /> Remove Option
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
@@ -388,7 +1106,7 @@ function App() {
             >
               {courses.map((course) => (
                 <article key={course.id} className="course-card">
-                  <div className="course-icon">{course.icon}</div>
+                  <div className="course-icon">{getIcon(course.icon)}</div>
                   <h3>{course.title}</h3>
                   <p>{course.desc}</p>
                   <ul className="course-features">
@@ -446,62 +1164,64 @@ function App() {
             <p className="section-subtitle">Explore our latest course announcements, star achiever details, and tuition programs in Booty More, Ranchi.</p>
 
             {/* Part 1: Auto-Rotating Poster Slideshow */}
-            <div className="poster-slideshow-container" style={{ margin: '3rem auto', maxWidth: '900px', overflow: 'hidden', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', background: '#1e293b', position: 'relative' }}>
-              <div style={{ position: 'relative', width: '100%', paddingTop: '32%', minHeight: '260px' }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentPoster}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
-                    transition={{ duration: 0.5 }}
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
-                  >
-                    <img 
-                      src={posters[currentPoster].src} 
-                      alt={posters[currentPoster].title} 
-                      style={{ width: '100%', height: '100%', objectFit: 'contain', cursor: 'pointer', background: '#1a202c' }}
-                      onClick={() => setLightboxImage(posters[currentPoster].src)}
-                    />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* Slider Controls Overlay */}
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0))', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                <div style={{ color: 'white', maxWidth: '75%' }}>
-                  <span style={{ display: 'inline-block', backgroundColor: 'var(--accent-orange)', color: 'white', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {posters[currentPoster].tag}
-                  </span>
-                  <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#f7fafc', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    {posters[currentPoster].title}
-                  </h3>
-                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#cbd5e0', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }} className="slider-subtitle">
-                    {posters[currentPoster].subtitle}
-                  </p>
+            {posters && posters.length > 0 && (
+              <div className="poster-slideshow-container" style={{ margin: '3rem auto', maxWidth: '900px', overflow: 'hidden', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', background: '#1e293b', position: 'relative' }}>
+                <div style={{ position: 'relative', width: '100%', paddingTop: '32%', minHeight: '260px' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentPoster}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.5 }}
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+                    >
+                      <img 
+                        src={posters[currentPoster].src} 
+                        alt={posters[currentPoster].title} 
+                        style={{ width: '100%', height: '100%', objectFit: 'contain', cursor: 'pointer', background: '#1a202c' }}
+                        onClick={() => setLightboxImage(posters[currentPoster].src)}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
-                {/* Indicator Dots */}
-                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.2rem' }}>
-                  {posters.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentPoster(idx)}
-                      style={{
-                        width: '10px',
-                        height: '10px',
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: idx === currentPoster ? 'var(--accent-orange)' : 'rgba(255,255,255,0.4)',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease'
-                      }}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  ))}
+                {/* Slider Controls Overlay */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0))', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', pointerEvents: 'none' }}>
+                  <div style={{ color: 'white', maxWidth: '75%' }}>
+                    <span style={{ display: 'inline-block', backgroundColor: 'var(--accent-orange)', color: 'white', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      {posters[currentPoster].tag}
+                    </span>
+                    <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#f7fafc', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                      {posters[currentPoster].title}
+                    </h3>
+                    <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#cbd5e0', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }} className="slider-subtitle">
+                      {posters[currentPoster].subtitle}
+                    </p>
+                  </div>
+
+                  {/* Indicator Dots */}
+                  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.2rem', pointerEvents: 'auto' }}>
+                    {posters.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentPoster(idx)}
+                        style={{
+                          width: '10px',
+                          height: '10px',
+                          borderRadius: '50%',
+                          border: 'none',
+                          background: idx === currentPoster ? 'var(--accent-orange)' : 'rgba(255,255,255,0.4)',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease'
+                        }}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 
@@ -519,7 +1239,7 @@ function App() {
               variants={staggerContainer}
             >
               {faculty.map((member, index) => {
-                const isRealImage = member.img.startsWith('/assets/');
+                const isRealImage = member.img.startsWith('/assets/') || member.img.startsWith('http');
                 const getInitials = (name) => {
                   const cleanName = name.replace(/(Dr\.|Prof\.|Sir)/g, '').trim();
                   const parts = cleanName.split(' ');
@@ -527,13 +1247,13 @@ function App() {
                   return initials.slice(0, 2).toUpperCase() || name[0].toUpperCase();
                 };
                 const getFacultyBg = (name) => {
-                  if (name.includes("Sen")) return "linear-gradient(135deg, #6366f1, #3b82f6)"; // Physics
-                  if (name.includes("Mishra")) return "linear-gradient(135deg, #4f46e5, #06b6d4)"; // Chemistry
-                  if (name.includes("Mehta")) return "linear-gradient(135deg, #10b981, #3b82f6)"; // Biology
-                  if (name.includes("Verma")) return "linear-gradient(135deg, #475569, #1e293b)"; // CS
-                  if (name.includes("Prasad")) return "linear-gradient(135deg, #f59e0b, #d97706)"; // Commerce
-                  if (name.includes("Ojha")) return "linear-gradient(135deg, #ec4899, #f43f5e)"; // English
-                  return "linear-gradient(135deg, #1c3b7b, #0b1c3c)"; // fallback
+                  if (name.includes("Sen")) return "linear-gradient(135deg, #6366f1, #3b82f6)"; 
+                  if (name.includes("Mishra")) return "linear-gradient(135deg, #4f46e5, #06b6d4)"; 
+                  if (name.includes("Mehta")) return "linear-gradient(135deg, #10b981, #3b82f6)"; 
+                  if (name.includes("Verma")) return "linear-gradient(135deg, #475569, #1e293b)"; 
+                  if (name.includes("Prasad")) return "linear-gradient(135deg, #f59e0b, #d97706)"; 
+                  if (name.includes("Ojha")) return "linear-gradient(135deg, #ec4899, #f43f5e)"; 
+                  return "linear-gradient(135deg, #1c3b7b, #0b1c3c)"; 
                 };
 
                 return (
@@ -693,14 +1413,9 @@ function App() {
                   <label>Interested Course</label>
                   <select name="course" className="form-control" required>
                     <option value="">Select a Course</option>
-                    <option value="IIT-JEE">IIT-JEE Preparation</option>
-                    <option value="NEET">NEET Preparation</option>
-                    <option value="Foundation">Foundation (Class 8-10)</option>
-                    <option value="Boards">Class 11-12 Boards / AL Coaching</option>
-                    <option value="HomeTuition">Home Tuition</option>
-                    <option value="Commerce">Commerce</option>
-                    <option value="GATE">GATE</option>
-                    <option value="Other">Other</option>
+                    {enquiryCourses.map((opt, idx) => (
+                      <option key={idx} value={opt.value}>{opt.label}</option>
+                    ))}
                   </select>
                 </div>
                 
