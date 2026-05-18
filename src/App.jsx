@@ -115,13 +115,7 @@ function App() {
 
   const faculty = [
     { name: 'Prakash Sir', qual: 'B.Tech / M.Tech & GATE Qualified', subject: 'Founder & Senior Mathematics Specialist', img: '/assets/prakash_sir.png' },
-    { name: 'Sagar Sir', qual: 'M.Sc in Mathematics & B.Ed', subject: 'Co-Founder & Science / Mathematics Faculty', img: '/assets/sagar_sir.png' },
-    { name: 'Dr. A. K. Sen', qual: 'Ph.D. in Physics (IIT Kharagpur)', subject: 'Senior Physics Expert (JEE & NEET)', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Prof. Rajesh Mishra', qual: 'M.Sc. in Chemistry (IIT Delhi), CSIR NET', subject: 'Chemistry Specialist (JEE & Board)', img: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Dr. Anjali Mehta', qual: 'Ph.D. in Botany & Zoology', subject: 'Biology Expert (NEET Specialist)', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Sanjay Verma', qual: 'MCA, B.Ed', subject: 'Computer Science (C/C++ & IT Batches)', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Ramanuj Prasad', qual: 'CA, M.Com', subject: 'Senior Faculty for Commerce & Accounts', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Shruti Ojha', qual: 'MA in English Literature', subject: 'Spoken English & Communication Coach', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300' }
+    { name: 'Sagar Sir', qual: 'M.Sc in Mathematics & B.Ed', subject: 'Co-Founder & Science / Mathematics Faculty', img: '/assets/sagar_sir.png' }
   ];
 
   const posters = [
