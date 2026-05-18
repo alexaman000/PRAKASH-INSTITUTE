@@ -630,8 +630,11 @@ function App() {
             </div>
           </div>
           
-          <div className="footer-bottom">
+          <div className="footer-bottom" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
             <p>&copy; {new Date().getFullYear()} Prakash Institute. All rights reserved. | Best Coaching Institute in Ranchi.</p>
+            <p style={{ fontSize: '0.85rem', opacity: 0.85, color: '#a0aec0', margin: '0.5rem 0 0 0' }}>
+              Built by <a href="https://www.linkedin.com/company/webbybuilder/" target="_blank" rel="noopener noreferrer" style={{ color: '#63b3ed', textDecoration: 'none', fontWeight: 'bold' }}>WebbyBuilder</a> | Developer: <span style={{ color: '#e2e8f0', fontWeight: '600' }}>Aman Raj</span> (<a href="mailto:alexaman000r@gmail.com" style={{ color: '#63b3ed', textDecoration: 'none' }}>alexaman000r@gmail.com</a>)
+            </p>
           </div>
         </div>
       </footer>
