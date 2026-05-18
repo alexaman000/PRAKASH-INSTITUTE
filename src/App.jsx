@@ -524,14 +524,39 @@ function App() {
               viewport={{ once: true, margin: "-50px" }}
               variants={staggerContainer}
             >
-              {faculty.map((member, index) => (
-                <motion.article key={index} className="faculty-card" variants={fadeInUp}>
-                  <img src={member.img} alt={`${member.name} - ${member.subject}`} className="faculty-img" loading="lazy" />
-                  <h3>{member.name}</h3>
-                  <p className="qualifications">{member.qual}</p>
-                  <p className="subject">{member.subject}</p>
-                </motion.article>
-              ))}
+              {faculty.map((member, index) => {
+                const isRealImage = member.img.startsWith('/assets/');
+                const getInitials = (name) => {
+                  const cleanName = name.replace(/(Dr\.|Prof\.|Sir)/g, '').trim();
+                  const parts = cleanName.split(' ');
+                  const initials = parts.map(p => p ? p[0] : '').join('');
+                  return initials.slice(0, 2).toUpperCase() || name[0].toUpperCase();
+                };
+                const getFacultyBg = (name) => {
+                  if (name.includes("Sen")) return "linear-gradient(135deg, #6366f1, #3b82f6)"; // Physics
+                  if (name.includes("Mishra")) return "linear-gradient(135deg, #4f46e5, #06b6d4)"; // Chemistry
+                  if (name.includes("Mehta")) return "linear-gradient(135deg, #10b981, #3b82f6)"; // Biology
+                  if (name.includes("Verma")) return "linear-gradient(135deg, #475569, #1e293b)"; // CS
+                  if (name.includes("Prasad")) return "linear-gradient(135deg, #f59e0b, #d97706)"; // Commerce
+                  if (name.includes("Ojha")) return "linear-gradient(135deg, #ec4899, #f43f5e)"; // English
+                  return "linear-gradient(135deg, #1c3b7b, #0b1c3c)"; // fallback
+                };
+
+                return (
+                  <motion.article key={index} className="faculty-card" variants={fadeInUp}>
+                    {isRealImage ? (
+                      <img src={member.img} alt={`${member.name} - ${member.subject}`} className="faculty-img" loading="lazy" />
+                    ) : (
+                      <div className="faculty-avatar-placeholder" style={{ background: getFacultyBg(member.name) }}>
+                        {getInitials(member.name)}
+                      </div>
+                    )}
+                    <h3>{member.name}</h3>
+                    <p className="qualifications">{member.qual}</p>
+                    <p className="subject">{member.subject}</p>
+                  </motion.article>
+                );
+              })}
             </motion.div>
             
             <div style={{ textAlign: 'center', marginTop: '3rem' }}>

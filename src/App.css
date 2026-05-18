@@ -336,6 +336,23 @@
   border: 4px solid rgba(11, 28, 60, 0.1);
 }
 
+.faculty-avatar-placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  border: 4px solid rgba(11, 28, 60, 0.15);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  user-select: none;
+}
+
 .faculty-card h4 {
   font-size: 1.25rem;
   color: var(--primary-blue);
