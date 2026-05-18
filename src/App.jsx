@@ -139,45 +139,6 @@ function App() {
     }
   ];
 
-  const galleryItems = [
-    {
-      title: "Interactive Maths Lecture",
-      desc: "Prakash Sir delivering an interactive algebra lecture with conceptual problem-solving.",
-      img: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=800",
-      tag: "Classroom"
-    },
-    {
-      title: "Focused Study Sessions",
-      desc: "Students engaged in problem-solving in a distraction-free library and study environment.",
-      img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
-      tag: "Study Hall"
-    },
-    {
-      title: "One-on-One Mentoring",
-      desc: "Sagar Sir providing personalized doubt-solving and concept clearance to a student.",
-      img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800",
-      tag: "Mentorship"
-    },
-    {
-      title: "Rank Celebration Ceremony",
-      desc: "Honoring our high achievers who scored 90%+ in board exams and qualified JEE/NEET.",
-      img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
-      tag: "Achievements"
-    },
-    {
-      title: "Interactive Physics & Science Lab",
-      desc: "Practical experiment demonstrations to bridge the gap between textbook theory and reality.",
-      img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
-      tag: "Science Lab"
-    },
-    {
-      title: "Parent-Teacher Council",
-      desc: "Regular feedback sessions with parents to discuss student progress and growth mapping.",
-      img: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=800",
-      tag: "Interaction"
-    }
-  ];
-
   const faqs = [
     {
       q: "Which is the best coaching near RTC School, Ranchi?",
@@ -292,8 +253,8 @@ function App() {
               <li><a href="#home" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</a></li>
               <li><a href="#courses" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Courses</a></li>
               <li><a href="#achievers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Achievers</a></li>
+              <li><a href="#gallery" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Notice Board</a></li>
               <li><a href="#faculty" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Faculty</a></li>
-              <li><a href="#gallery" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Gallery</a></li>
               <li><a href="#faq" className="nav-link" onClick={() => setMobileMenuOpen(false)}>FAQ</a></li>
               <li><a href="#enquiry" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Enquiry</a></li>
             </ul>
@@ -466,38 +427,7 @@ function App() {
           </div>
         </section>
 
-        {/* Faculty Section */}
-        <section id="faculty" className="section-padding bg-pattern">
-          <div className="container">
-            <h2 className="section-title">Top Maths & Science Teachers in Ranchi</h2>
-            <p className="section-subtitle">Learn from the best minds who are passionate about teaching and committed to your success.</p>
-            
-            <motion.div 
-              className="faculty-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={staggerContainer}
-            >
-              {faculty.map((member, index) => (
-                <motion.article key={index} className="faculty-card" variants={fadeInUp}>
-                  <img src={member.img} alt={`${member.name} - ${member.subject}`} className="faculty-img" loading="lazy" />
-                  <h3>{member.name}</h3>
-                  <p className="qualifications">{member.qual}</p>
-                  <p className="subject">{member.subject}</p>
-                </motion.article>
-              ))}
-            </motion.div>
-            
-            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-              <a href="https://youtube.com/@mathswithprakashsir5191?si=qxJS-bHrnd1jCkBv" target="_blank" rel="noreferrer" className="btn btn-primary">
-                <FaYoutube style={{ fontSize: '1.2rem' }} /> Watch Demo Videos of Prakash Sir
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Gallery Section */}
+        {/* Gallery/Notice Board Section */}
         <section id="gallery" className="section-padding bg-pattern" style={{ backgroundColor: '#f7fafc' }}>
           <div className="container">
             <h2 className="section-title">Notice Board & Announcements</h2>
@@ -560,42 +490,36 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Part 2: Gallery Divider & Interactive Photo Grid */}
-            <div style={{ marginTop: '5rem', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '4rem' }}>
-              <h2 className="section-title">Institute Gallery</h2>
-              <p className="section-subtitle">A glimpse into the daily learning environments, study resources, and vibrant student activities at Prakash Institute.</p>
-              
-              <div className="gallery-grid">
-                {galleryItems.map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="gallery-card" 
-                    onClick={() => setLightboxImage(item.img)}
-                  >
-                    <img 
-                      src={item.img} 
-                      alt={item.title} 
-                      className="gallery-img-hover" 
-                      loading="lazy" 
-                    />
-                    
-                    {/* Subtle Text Tag Overlay */}
-                    <span style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(30, 41, 59, 0.85)', color: 'white', padding: '0.25rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '600', backdropFilter: 'blur(4px)' }}>
-                      {item.tag}
-                    </span>
-
-                    {/* Hover Info Overlay */}
-                    <div className="gallery-card-overlay">
-                      <h3 style={{ color: 'white', margin: 0, fontSize: '1.1rem' }}>{item.title}</h3>
-                      <p style={{ color: '#cbd5e0', fontSize: '0.8rem', margin: '0.4rem 0 0 0', lineHeight: 1.4 }}>{item.desc}</p>
-                      <span style={{ color: 'var(--accent-gold)', fontSize: '0.75rem', fontWeight: 'bold', marginTop: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        Click to expand &rarr;
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Faculty Section */}
+        <section id="faculty" className="section-padding bg-pattern">
+          <div className="container">
+            <h2 className="section-title">Top Maths & Science Teachers in Ranchi</h2>
+            <p className="section-subtitle">Learn from the best minds who are passionate about teaching and committed to your success.</p>
+            
+            <motion.div 
+              className="faculty-grid"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+            >
+              {faculty.map((member, index) => (
+                <motion.article key={index} className="faculty-card" variants={fadeInUp}>
+                  <img src={member.img} alt={`${member.name} - ${member.subject}`} className="faculty-img" loading="lazy" />
+                  <h3>{member.name}</h3>
+                  <p className="qualifications">{member.qual}</p>
+                  <p className="subject">{member.subject}</p>
+                </motion.article>
+              ))}
+            </motion.div>
+            
+            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+              <a href="https://youtube.com/@mathswithprakashsir5191?si=qxJS-bHrnd1jCkBv" target="_blank" rel="noreferrer" className="btn btn-primary">
+                <FaYoutube style={{ fontSize: '1.2rem' }} /> Watch Demo Videos of Prakash Sir
+              </a>
             </div>
           </div>
         </section>
