@@ -35,6 +35,8 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+  const [currentPoster, setCurrentPoster] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +44,13 @@ function App() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPoster((prev) => (prev + 1) % posters.length);
+    }, 4500); // changes every 4.5 seconds
+    return () => clearInterval(interval);
   }, []);
 
   const toggleFaq = (index) => {
@@ -107,6 +116,66 @@ function App() {
     { name: 'Sagar Sir', qual: 'M.Sc & B.Ed in Mathematics', subject: 'Science & Maths Expert', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300' },
     { name: 'Dr. Neha Verma', qual: 'Ph.D in Biology', subject: 'Botany & Zoology', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300' },
     { name: 'Ravi Sir', qual: 'CA, M.Com', subject: 'Commerce & Accounts', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300' },
+  ];
+
+  const posters = [
+    {
+      src: "/assets/poster_achievers.jpg",
+      title: "Our Star Achievers & Top Rankers",
+      subtitle: "Celebrating outstanding scores in board exams and competitive selections. Expert guidance by Prakash Sir and Sagar Sir.",
+      tag: "Achievers Batch"
+    },
+    {
+      src: "/assets/poster_courses.jpg",
+      title: "IIT-JEE / NEET / Foundation & Commerce Batches",
+      subtitle: "Comprehensive curriculum coverage for Class 6th to 12th, Olympiad Prep, Spoken English, and C/C++ classes.",
+      tag: "All Courses"
+    },
+    {
+      src: "/assets/poster_hometuition.jpg",
+      title: "Specialized Home Tuition Services in Ranchi",
+      subtitle: "Personalized home tutoring for Class 11-12 Maths (Board & JEE) and Class 9-10 Maths & Science. 10+ years expert experience.",
+      tag: "Home Tuition"
+    }
+  ];
+
+  const galleryItems = [
+    {
+      title: "Interactive Maths Lecture",
+      desc: "Prakash Sir delivering an interactive algebra lecture with conceptual problem-solving.",
+      img: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=800",
+      tag: "Classroom"
+    },
+    {
+      title: "Focused Study Sessions",
+      desc: "Students engaged in problem-solving in a distraction-free library and study environment.",
+      img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
+      tag: "Study Hall"
+    },
+    {
+      title: "One-on-One Mentoring",
+      desc: "Sagar Sir providing personalized doubt-solving and concept clearance to a student.",
+      img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800",
+      tag: "Mentorship"
+    },
+    {
+      title: "Rank Celebration Ceremony",
+      desc: "Honoring our high achievers who scored 90%+ in board exams and qualified JEE/NEET.",
+      img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
+      tag: "Achievements"
+    },
+    {
+      title: "Interactive Physics & Science Lab",
+      desc: "Practical experiment demonstrations to bridge the gap between textbook theory and reality.",
+      img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
+      tag: "Science Lab"
+    },
+    {
+      title: "Parent-Teacher Council",
+      desc: "Regular feedback sessions with parents to discuss student progress and growth mapping.",
+      img: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=800",
+      tag: "Interaction"
+    }
   ];
 
   const faqs = [
@@ -224,6 +293,7 @@ function App() {
               <li><a href="#courses" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Courses</a></li>
               <li><a href="#achievers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Achievers</a></li>
               <li><a href="#faculty" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Faculty</a></li>
+              <li><a href="#gallery" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Gallery</a></li>
               <li><a href="#faq" className="nav-link" onClick={() => setMobileMenuOpen(false)}>FAQ</a></li>
               <li><a href="#enquiry" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Enquiry</a></li>
             </ul>
@@ -426,6 +496,137 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Gallery Section */}
+        <section id="gallery" className="section-padding bg-pattern" style={{ backgroundColor: '#f7fafc' }}>
+          <div className="container">
+            <h2 className="section-title">Institute Gallery & Announcements</h2>
+            <p className="section-subtitle">Explore our latest course announcements, student achievements, and vibrant classroom moments at Prakash Institute Ranchi.</p>
+
+            {/* Part 1: Auto-Rotating Poster Slideshow */}
+            <div className="poster-slideshow-container" style={{ margin: '3rem auto', maxWidth: '900px', overflow: 'hidden', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', background: '#1e293b', position: 'relative' }}>
+              <div style={{ position: 'relative', width: '100%', paddingTop: '32%', minHeight: '260px' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentPoster}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.02 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <img 
+                      src={posters[currentPoster].src} 
+                      alt={posters[currentPoster].title} 
+                      style={{ width: '100%', height: '100%', objectFit: 'contain', cursor: 'pointer', background: '#1a202c' }}
+                      onClick={() => setLightboxImage(posters[currentPoster].src)}
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Slider Controls Overlay */}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0))', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div style={{ color: 'white', maxWidth: '75%' }}>
+                  <span style={{ display: 'inline-block', backgroundColor: 'var(--accent-orange)', color: 'white', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {posters[currentPoster].tag}
+                  </span>
+                  <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#f7fafc', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    {posters[currentPoster].title}
+                  </h3>
+                  <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: '#cbd5e0', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }} className="slider-subtitle">
+                    {posters[currentPoster].subtitle}
+                  </p>
+                </div>
+
+                {/* Indicator Dots */}
+                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.2rem' }}>
+                  {posters.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentPoster(idx)}
+                      style={{
+                        width: '10px',
+                        height: '10px',
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: idx === currentPoster ? 'var(--accent-orange)' : 'rgba(255,255,255,0.4)',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Part 2: Interactive Photo Grid */}
+            <div className="gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
+              {galleryItems.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="gallery-card" 
+                  style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', background: 'white', position: 'relative', cursor: 'pointer', aspectRatio: '4/3' }}
+                  onClick={() => setLightboxImage(item.img)}
+                >
+                  <img 
+                    src={item.img} 
+                    alt={item.title} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} 
+                    className="gallery-img-hover" 
+                    loading="lazy" 
+                  />
+                  
+                  {/* Subtle Text Tag Overlay */}
+                  <span style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(30, 41, 59, 0.85)', color: 'white', padding: '0.25rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '600', backdropFilter: 'blur(4px)' }}>
+                    {item.tag}
+                  </span>
+
+                  {/* Hover Info Overlay */}
+                  <div className="gallery-card-overlay" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(26, 32, 44, 0.95), rgba(26, 32, 44, 0.4))', padding: '1.25rem', transform: 'translateY(100%)', transition: 'transform 0.3s ease-in-out', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
+                    <h3 style={{ color: 'white', margin: 0, fontSize: '1.1rem' }}>{item.title}</h3>
+                    <p style={{ color: '#cbd5e0', fontSize: '0.8rem', margin: '0.4rem 0 0 0', lineHeight: 1.4 }}>{item.desc}</p>
+                    <span style={{ color: 'var(--accent-gold)', fontSize: '0.75rem', fontWeight: 'bold', marginTop: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      Click to expand &rarr;
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Fullscreen Lightbox Modal */}
+        <AnimatePresence>
+          {lightboxImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(15, 23, 42, 0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '2rem' }}
+              onClick={() => setLightboxImage(null)}
+            >
+              <button 
+                onClick={() => setLightboxImage(null)} 
+                style={{ position: 'absolute', top: '24px', right: '24px', background: 'transparent', border: 'none', color: 'white', fontSize: '2rem', cursor: 'pointer', zIndex: 1010 }}
+              >
+                &times;
+              </button>
+              
+              <motion.img 
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                src={lightboxImage} 
+                alt="Enlarged gallery view of Prakash Institute Ranchi" 
+                style={{ maxWidth: '90%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '8px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Locations SEO Section */}
         <section className="section-padding seo-block">
