@@ -103,19 +103,25 @@ function App() {
   ];
 
   const achievers = [
-    { name: 'Rahul Kumar', exam: 'IIT-JEE Adv - AIR 452', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Sneha Singh', exam: 'NEET - Score 685', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Amit Patel', exam: 'CBSE 12th - 98.4%', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Priya Verma', exam: 'GATE - Rank 120', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Vikash Rao', exam: 'IIT-JEE Mains - 99.8 PR', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Anjali Sharma', exam: 'NEET - Score 670', img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Manjeet Deep', exam: 'Board Exam - 93.4%', img: '/assets/student_1.png' },
+    { name: 'Nitin Ranjan', exam: 'Board Exam - 92.0%', img: '/assets/student_2.png' },
+    { name: 'Rishu Kumar', exam: 'Board Exam - 92.0%', img: '/assets/student_3.png' },
+    { name: 'Ayush Gupta', exam: 'Board Exam - 92.0%', img: '/assets/student_4.png' },
+    { name: 'Ranjeet Baitha', exam: 'Board Exam - 89.0%', img: '/assets/student_5.png' },
+    { name: 'Ashish Ranjan', exam: 'Board Exam - 88.0%', img: '/assets/student_6.png' },
+    { name: 'Sonu Sahu', exam: 'Board Exam - 87.0%', img: '/assets/student_7.png' },
+    { name: 'Manish Mahto', exam: 'Board Exam - 85.0%', img: '/assets/student_8.png' }
   ];
 
   const faculty = [
-    { name: 'Prakash Sir', qual: 'B.Tech + M.Tech (GATE Qualified)', subject: 'Top Mathematics Teacher in Ranchi', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Sagar Sir', qual: 'M.Sc & B.Ed in Mathematics', subject: 'Science & Maths Expert', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Dr. Neha Verma', qual: 'Ph.D in Biology', subject: 'Botany & Zoology', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Ravi Sir', qual: 'CA, M.Com', subject: 'Commerce & Accounts', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Prakash Sir', qual: 'B.Tech / M.Tech & GATE Qualified', subject: 'Founder & Senior Mathematics Specialist', img: '/assets/prakash_sir.png' },
+    { name: 'Sagar Sir', qual: 'M.Sc in Mathematics & B.Ed', subject: 'Co-Founder & Science / Mathematics Faculty', img: '/assets/sagar_sir.png' },
+    { name: 'Dr. A. K. Sen', qual: 'Ph.D. in Physics (IIT Kharagpur)', subject: 'Senior Physics Expert (JEE & NEET)', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Prof. Rajesh Mishra', qual: 'M.Sc. in Chemistry (IIT Delhi), CSIR NET', subject: 'Chemistry Specialist (JEE & Board)', img: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Dr. Anjali Mehta', qual: 'Ph.D. in Botany & Zoology', subject: 'Biology Expert (NEET Specialist)', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Sanjay Verma', qual: 'MCA, B.Ed', subject: 'Computer Science (C/C++ & IT Batches)', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Ramanuj Prasad', qual: 'CA, M.Com', subject: 'Senior Faculty for Commerce & Accounts', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Shruti Ojha', qual: 'MA in English Literature', subject: 'Spoken English & Communication Coach', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300' }
   ];
 
   const posters = [
