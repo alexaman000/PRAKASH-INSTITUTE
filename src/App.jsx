@@ -142,7 +142,7 @@ function App() {
       "addressCountry": "IN"
     },
     "telephone": "+91 79036 31674",
-    "email": "info@prakashinstitute.com",
+    "email": "prakash96089kumar@gmail.com",
     "url": "https://www.prakashinstituteranchi.online",
     "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800&h=600",
     "priceRange": "₹₹",
@@ -618,7 +618,7 @@ function App() {
                 </li>
                 <li>
                   <FaEnvelope />
-                  <span>info@prakashinstitute.com</span>
+                  <span>prakash96089kumar@gmail.com</span>
                 </li>
               </ul>
             </div>
