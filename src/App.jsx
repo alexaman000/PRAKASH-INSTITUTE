@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaBookReader, FaChalkboardTeacher, FaUserGraduate, FaLaptopCode, 
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp, 
-  FaInstagram, FaFacebookF, FaYoutube, FaBars, FaTimes, FaLinkedinIn
+  FaInstagram, FaFacebookF, FaYoutube, FaBars, FaTimes, FaLinkedinIn,
+  FaCheckCircle, FaChevronDown, FaChevronUp, FaStar, FaMapSigns
 } from 'react-icons/fa';
 import './App.css';
 
@@ -13,7 +14,7 @@ const CountUp = ({ end, duration = 2, suffix = "" }) => {
 
   useEffect(() => {
     let start = 0;
-    const increment = end / (duration * 60); // Assuming 60fps
+    const increment = end / (duration * 60); 
     const timer = setInterval(() => {
       start += increment;
       if (start >= end) {
@@ -33,7 +34,7 @@ const CountUp = ({ end, duration = 2, suffix = "" }) => {
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('iit-jee');
+  const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +43,10 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
   // Animation variants
   const fadeInUp = {
@@ -98,11 +103,89 @@ function App() {
   ];
 
   const faculty = [
-    { name: 'Prakash Sir', qual: 'B.Tech + M.Tech (GATE Qualified)', subject: 'Mathematics Expert', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300&h=300' },
-    { name: 'Sagar Sir', qual: 'M.Sc & B.Ed in Mathematics', subject: 'Science & Maths', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Prakash Sir', qual: 'B.Tech + M.Tech (GATE Qualified)', subject: 'Top Mathematics Teacher in Ranchi', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300&h=300' },
+    { name: 'Sagar Sir', qual: 'M.Sc & B.Ed in Mathematics', subject: 'Science & Maths Expert', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300&h=300' },
     { name: 'Dr. Neha Verma', qual: 'Ph.D in Biology', subject: 'Botany & Zoology', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300&h=300' },
     { name: 'Ravi Sir', qual: 'CA, M.Com', subject: 'Commerce & Accounts', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300&h=300' },
   ];
+
+  const faqs = [
+    {
+      q: "Which is the best coaching near RTC School, Ranchi?",
+      a: "Prakash Institute is widely recognized as the top coaching institute near RTC School, Booty More, Ranchi. We provide expert maths tuition, science coaching, and comprehensive preparation for JEE, NEET, and board exams."
+    },
+    {
+      q: "Do you provide maths coaching in Bariatu and Morabadi?",
+      a: "Yes, our coaching center is easily accessible from Bariatu, Morabadi, Bargain, and Kanke Road. We provide the best maths tuition in Ranchi with dedicated batches for Class 10, 11, and 12."
+    },
+    {
+      q: "Are there home tuition services available in Ranchi?",
+      a: "Yes, Prakash Institute also provides excellent home tuition services across Ranchi for students who need personalized one-on-one attention in subjects like physics, chemistry, and maths."
+    },
+    {
+      q: "What makes Prakash Institute the top coaching institute in Ranchi?",
+      a: "We offer highly experienced faculty, including Prakash Sir (Mathematics Expert), comprehensive study materials, regular mock tests, and a track record of producing top rankers in JEE, NEET, and board exams."
+    }
+  ];
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Prakash Institute",
+    "description": "Top coaching institute in Ranchi providing expert tuition for IIT-JEE, NEET, Foundation, and Board exams. Located near RTC High School, Booty More, Ranchi.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Jugnu Complex, Near RTC High School, Booty More",
+      "addressLocality": "Ranchi",
+      "addressRegion": "Jharkhand",
+      "postalCode": "834009",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91 79036 31674",
+    "email": "info@prakashinstitute.com",
+    "url": "https://www.prakashinstituteranchi.online",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800&h=600",
+    "priceRange": "₹₹",
+    "areaServed": [
+      "RTC School area",
+      "Bariatu",
+      "Booty More",
+      "Bargain",
+      "Bargawan",
+      "Morabadi",
+      "Kanke Road",
+      "Ranchi"
+    ]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a
+      }
+    }))
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.prakashinstituteranchi.online/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IIT-JEE & NEET Coaching",
+      "item": "https://www.prakashinstituteranchi.online/#courses"
+    }]
+  };
 
   const handleWhatsAppEnquiry = (e) => {
     e.preventDefault();
@@ -118,27 +201,34 @@ function App() {
 
   return (
     <div className="app-container">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      
       {/* Navbar */}
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
           <a href="#" className="logo">
             <FaBookReader className="text-primary" />
             Prakash <span>Institute</span>
           </a>
           
-          <ul className="nav-links">
-            <li><a href="#home" className="nav-link">Home</a></li>
-            <li><a href="#courses" className="nav-link">Courses</a></li>
-            <li><a href="#achievers" className="nav-link">Achievers</a></li>
-            <li><a href="#faculty" className="nav-link">Faculty</a></li>
-            <li><a href="#enquiry" className="nav-link">Enquiry</a></li>
-          </ul>
+          <nav>
+            <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
+              <li><a href="#home" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</a></li>
+              <li><a href="#courses" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Courses</a></li>
+              <li><a href="#achievers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Achievers</a></li>
+              <li><a href="#faculty" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Faculty</a></li>
+              <li><a href="#faq" className="nav-link" onClick={() => setMobileMenuOpen(false)}>FAQ</a></li>
+              <li><a href="#enquiry" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Enquiry</a></li>
+            </ul>
+          </nav>
 
-          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
             {mobileMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-      </nav>
+      </header>
 
       <main>
         {/* Hero Section */}
@@ -151,10 +241,10 @@ function App() {
               variants={staggerContainer}
             >
               <motion.h1 variants={fadeInUp}>
-                Your Path to <span>Success</span> Starts Here
+                Best Coaching Institute Near <span>RTC School, Ranchi</span>
               </motion.h1>
               <motion.p variants={fadeInUp}>
-                "Education is not the learning of facts, but the training of the mind to think." Join Prakash Institute for premium coaching in IIT-JEE, NEET, Commerce, and foundation courses.
+                Join Prakash Institute for premium maths tuition, science coaching, and comprehensive preparation for IIT-JEE, NEET, and Board Exams. Proudly serving Booty More, Bariatu, Morabadi, and nearby areas.
               </motion.p>
               <motion.div className="hero-actions" variants={fadeInUp} style={{ flexWrap: 'wrap' }}>
                 <a href="#courses" className="btn btn-primary">Explore Courses</a>
@@ -171,7 +261,7 @@ function App() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800&h=600" alt="Students studying" />
+              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800&h=600" alt="Top Coaching Institute Ranchi Students" loading="lazy" />
               <div className="floating-badge">
                 <FaUserGraduate size={30} color="var(--accent-orange)" />
                 <div>
@@ -187,30 +277,58 @@ function App() {
         <section className="stats">
           <div className="container stats-grid">
             <motion.div className="stat-item" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h3><CountUp end={10} suffix="+" /></h3>
-              <p>Years of Excellence</p>
+              <h2 style={{ fontSize: '3rem', color: 'var(--accent-gold)' }}><CountUp end={10} suffix="+" /></h2>
+              <p>Years of Excellence in Ranchi</p>
             </motion.div>
             <motion.div className="stat-item" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h3><CountUp end={500} suffix="+" /></h3>
-              <p>Selections in Top Exams</p>
+              <h2 style={{ fontSize: '3rem', color: 'var(--accent-gold)' }}><CountUp end={500} suffix="+" /></h2>
+              <p>Selections in JEE/NEET</p>
             </motion.div>
             <motion.div className="stat-item" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h3><CountUp end={20} suffix="+" /></h3>
-              <p>Expert Faculty Members</p>
+              <h2 style={{ fontSize: '3rem', color: 'var(--accent-gold)' }}><CountUp end={20} suffix="+" /></h2>
+              <p>Expert Tutors</p>
             </motion.div>
             <motion.div className="stat-item" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h3><CountUp end={100} suffix="%" /></h3>
-              <p>Dedication & Focus</p>
+              <h2 style={{ fontSize: '3rem', color: 'var(--accent-gold)' }}><CountUp end={100} suffix="%" /></h2>
+              <p>Commitment to Results</p>
             </motion.div>
           </div>
         </section>
 
+        {/* Why Choose Us Section */}
+        <section id="why-choose-us" className="section-padding bg-pattern">
+          <div className="container">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+              <h2 className="section-title">Why Choose Prakash Institute?</h2>
+              <p className="section-subtitle">We are rated as the top coaching center in Booty More and Bariatu because of our proven teaching methodology.</p>
+            </motion.div>
+            
+            <div className="why-choose-us">
+              <motion.div className="feature-box" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                <FaChalkboardTeacher className="feature-icon" />
+                <h3>Expert Faculty in Ranchi</h3>
+                <p>Learn from the top maths teacher in Ranchi and experienced science educators dedicated to your child's success in CBSE and JAC boards.</p>
+              </motion.div>
+              <motion.div className="feature-box" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.2 }}>
+                <FaStar className="feature-icon" />
+                <h3>Proven Track Record</h3>
+                <p>Consistently producing top rankers in JEE, NEET, and scoring highest percentages in Class 10 and 12 board exams year after year.</p>
+              </motion.div>
+              <motion.div className="feature-box" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.4 }}>
+                <FaBookReader className="feature-icon" />
+                <h3>Comprehensive Study Material</h3>
+                <p>Access well-structured, modern notes and continuous mock tests to ensure you are fully prepared for your targeted examinations.</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Courses Section */}
-        <section id="courses" className="section-padding bg-pattern">
+        <section id="courses" className="section-padding" style={{ backgroundColor: 'white' }}>
           <div className="container">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
-              <h2 className="section-title">Our Premium Courses</h2>
-              <p className="section-subtitle">Comprehensive learning programs designed by experts to help you ace your academic goals.</p>
+              <h2 className="section-title">Top Coaching Courses in Ranchi</h2>
+              <p className="section-subtitle">Affordable and comprehensive tuition classes near you for science, commerce, and competitive exams.</p>
             </motion.div>
             
             <motion.div 
@@ -221,17 +339,17 @@ function App() {
               variants={staggerContainer}
             >
               {courses.map((course) => (
-                <motion.div key={course.id} className="course-card" variants={fadeInUp}>
+                <article key={course.id} className="course-card">
                   <div className="course-icon">{course.icon}</div>
                   <h3>{course.title}</h3>
                   <p>{course.desc}</p>
                   <ul className="course-features">
                     {course.features.map((feature, idx) => (
-                      <li key={idx}><FaBookReader size={12} /> {feature}</li>
+                      <li key={idx}><FaCheckCircle size={12} /> {feature}</li>
                     ))}
                   </ul>
                   <a href="#enquiry" className="btn btn-outline" style={{ width: '100%' }}>Enquire Now</a>
-                </motion.div>
+                </article>
               ))}
             </motion.div>
           </div>
@@ -241,9 +359,9 @@ function App() {
         <section id="home-tuition" className="section-padding" style={{ backgroundColor: 'var(--primary-blue)', color: 'white', textAlign: 'center' }}>
           <div className="container">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--accent-gold)', fontFamily: 'Outfit, sans-serif' }}>Looking for Home Tuition?</h2>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--accent-gold)', fontFamily: 'Outfit, sans-serif' }}>Best Home Tuition in Ranchi</h2>
               <p style={{ fontSize: '1.125rem', maxWidth: '700px', margin: '0 auto 2rem', opacity: 0.9 }}>
-                Get personalized, one-on-one attention from the comfort of your home. We provide expert home tutors for Class 8-12, IIT-JEE, NEET, and Foundation courses across Ranchi.
+                Looking for personalized attention? We provide the best home tuition in Ranchi for Class 10 maths, Class 11 science, and specialized JEE/NEET coaching right at your doorstep.
               </p>
               <a href="#enquiry" className="btn btn-primary" style={{ backgroundColor: 'white', color: 'var(--primary-blue)', boxShadow: 'none' }}>
                 Request a Home Tutor
@@ -255,20 +373,20 @@ function App() {
         {/* Achievers Section */}
         <section id="achievers" className="achievers">
           <div className="container">
-            <h2 className="section-title">Our Top Achievers</h2>
-            <p className="section-subtitle">Meet our proud students who turned their dreams into reality with sheer hard work and our expert guidance.</p>
+            <h2 className="section-title">Outstanding Results & Student Achievers</h2>
+            <p className="section-subtitle">Meet our proud students from the Bariatu and Booty More areas who turned their dreams into reality with sheer hard work and our expert guidance.</p>
           </div>
           
           <div className="carousel-container">
             {[...achievers, ...achievers].map((achiever, index) => (
-              <div key={index} className="achiever-card">
-                <img src={achiever.img} alt={achiever.name} className="achiever-img" />
+              <article key={index} className="achiever-card">
+                <img src={achiever.img} alt={`Successful student ${achiever.name} from Prakash Institute Ranchi`} className="achiever-img" loading="lazy" />
                 <div className="achiever-info">
-                  <h4>{achiever.name}</h4>
+                  <h3>{achiever.name}</h3>
                   <p>{achiever.exam}</p>
                   <span className="exam">Prakash Institute Alumni</span>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </section>
@@ -276,7 +394,7 @@ function App() {
         {/* Faculty Section */}
         <section id="faculty" className="section-padding bg-pattern">
           <div className="container">
-            <h2 className="section-title">Meet Our Expert Faculty</h2>
+            <h2 className="section-title">Top Maths & Science Teachers in Ranchi</h2>
             <p className="section-subtitle">Learn from the best minds who are passionate about teaching and committed to your success.</p>
             
             <motion.div 
@@ -287,12 +405,12 @@ function App() {
               variants={staggerContainer}
             >
               {faculty.map((member, index) => (
-                <motion.div key={index} className="faculty-card" variants={fadeInUp}>
-                  <img src={member.img} alt={member.name} className="faculty-img" />
-                  <h4>{member.name}</h4>
+                <motion.article key={index} className="faculty-card" variants={fadeInUp}>
+                  <img src={member.img} alt={`${member.name} - ${member.subject}`} className="faculty-img" loading="lazy" />
+                  <h3>{member.name}</h3>
                   <p className="qualifications">{member.qual}</p>
                   <p className="subject">{member.subject}</p>
-                </motion.div>
+                </motion.article>
               ))}
             </motion.div>
             
@@ -304,11 +422,64 @@ function App() {
           </div>
         </section>
 
+        {/* Locations SEO Section */}
+        <section className="section-padding seo-block">
+          <div className="container">
+            <div className="seo-content text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
+              <FaMapSigns size={40} color="var(--accent-orange)" style={{ marginBottom: '1rem' }} />
+              <h2>Coaching Classes Near Me</h2>
+              <p>Conveniently located near RTC School, Prakash Institute proudly serves students from all major surrounding localities. Whether you are searching for tuition classes in Bariatu, coaching in Bargain, or science coaching near Morabadi, we are easily accessible and recognized as the top choice for parents and students in the region.</p>
+              
+              <div className="seo-tags" style={{ justifyContent: 'center' }}>
+                <span className="seo-tag">Tuition near Booty More</span>
+                <span className="seo-tag">Maths coaching in Bariatu</span>
+                <span className="seo-tag">Coaching near RTC School</span>
+                <span className="seo-tag">Institute in Bargawan</span>
+                <span className="seo-tag">Coaching near Kanke Road</span>
+                <span className="seo-tag">Science coaching Morabadi</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section id="faq" className="section-padding faq-section">
+          <div className="container" style={{ maxWidth: '800px' }}>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+            <p className="section-subtitle">Find answers to common queries about our coaching institute, batches, and locations.</p>
+            
+            <div style={{ marginTop: '2rem' }}>
+              {faqs.map((faq, index) => (
+                <div key={index} className="faq-item">
+                  <h3 className="faq-question" onClick={() => toggleFaq(index)}>
+                    {faq.q}
+                    {openFaq === index ? <FaChevronUp color="var(--accent-orange)" /> : <FaChevronDown color="var(--primary-blue)" />}
+                  </h3>
+                  <AnimatePresence>
+                    {openFaq === index && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="faq-answer">
+                          <p style={{ margin: 0 }}>{faq.a}</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Enquiry Form Section */}
         <section id="enquiry" className="enquiry">
           <div className="container enquiry-container">
             <motion.div className="enquiry-info" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <h2>Start Your Journey With Us</h2>
+              <h2>Join the Best Coaching Institute Near You</h2>
               <p>Take the first step towards a bright future. Fill out the form, and our academic counselors will get back to you with all the details regarding fees, batch timings, and course structure.</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
@@ -317,8 +488,8 @@ function App() {
                     <FaMapMarkerAlt />
                   </div>
                   <div>
-                    <h4 style={{ margin: 0 }}>Address</h4>
-                    <p style={{ margin: 0, fontSize: '0.875rem', opacity: 0.8 }}>Jugnu Complex, Near RTC High School, Booti More, Ranchi</p>
+                    <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'white' }}>Address</h3>
+                    <p style={{ margin: 0, fontSize: '0.875rem', opacity: 0.8 }}>Jugnu Complex, Near RTC High School, Booty More, Ranchi</p>
                   </div>
                 </div>
                 
@@ -327,7 +498,7 @@ function App() {
                     <FaPhoneAlt />
                   </div>
                   <div>
-                    <h4 style={{ margin: 0 }}>Phone</h4>
+                    <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'white' }}>Phone</h3>
                     <p style={{ margin: 0, fontSize: '0.875rem', opacity: 0.8 }}>+91 79036 31674</p>
                   </div>
                 </div>
@@ -379,10 +550,10 @@ function App() {
         {/* Map Section */}
         <section className="section-padding pb-0">
           <div className="container">
-            <h2 className="section-title">Find Us Here</h2>
+            <h2 className="section-title">Our Location - Booty More, Ranchi</h2>
             <div className="map-container">
-              {/* Replace the src with actual Google Maps embed link for the address */}
               <iframe 
+                title="Prakash Institute Location Google Maps"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14652.548487770851!2d85.349692!3d23.418706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e3c155555555%3A0x1234567890abcdef!2sBooti%20More%2C%20Ranchi%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
                 allowFullScreen="" 
                 loading="lazy">
@@ -401,44 +572,45 @@ function App() {
                 Prakash <span>Institute</span>
               </div>
               <p className="footer-desc">
-                Empowering students to achieve their academic goals with top-tier coaching, expert faculty, and a proven track record of success in competitive exams.
+                The top-rated coaching institute near RTC School, Ranchi, empowering students to achieve their academic goals with expert faculty and proven success.
               </p>
               <div className="social-links">
-                <a href="#" className="social-link"><FaFacebookF /></a>
-                <a href="#" className="social-link"><FaInstagram /></a>
-                <a href="https://youtube.com/@mathswithprakashsir5191?si=qxJS-bHrnd1jCkBv" className="social-link"><FaYoutube /></a>
-                <a href="#" className="social-link"><FaLinkedinIn /></a>
+                <a href="#" className="social-link" aria-label="Facebook"><FaFacebookF /></a>
+                <a href="#" className="social-link" aria-label="Instagram"><FaInstagram /></a>
+                <a href="https://youtube.com/@mathswithprakashsir5191?si=qxJS-bHrnd1jCkBv" className="social-link" aria-label="YouTube"><FaYoutube /></a>
+                <a href="#" className="social-link" aria-label="LinkedIn"><FaLinkedinIn /></a>
               </div>
             </div>
             
             <div className="footer-col">
-              <h4>Quick Links</h4>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'white' }}>Quick Links</h3>
               <ul className="footer-links">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#why-choose-us">Why Choose Us</a></li>
                 <li><a href="#courses">Courses offered</a></li>
                 <li><a href="#achievers">Our Results</a></li>
-                <li><a href="#faculty">Expert Faculty</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#enquiry">Admissions</a></li>
               </ul>
             </div>
             
             <div className="footer-col">
-              <h4>Courses</h4>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'white' }}>Courses</h3>
               <ul className="footer-links">
-                <li><a href="#">IIT-JEE (Mains & Advanced)</a></li>
+                <li><a href="#">IIT-JEE Coaching</a></li>
                 <li><a href="#">NEET (UG) Preparation</a></li>
                 <li><a href="#">Foundation (8th - 10th)</a></li>
                 <li><a href="#">Class 11th & 12th / AL</a></li>
-                <li><a href="#">Commerce & GATE</a></li>
+                <li><a href="#">Home Tuition Ranchi</a></li>
               </ul>
             </div>
             
             <div className="footer-col">
-              <h4>Contact Info</h4>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'white' }}>Contact Info</h3>
               <ul className="contact-info">
                 <li>
                   <FaMapMarkerAlt />
-                  <span>Jugnu Complex, Near RTC High School, Booti More, Ranchi</span>
+                  <span>Jugnu Complex, Near RTC High School, Booty More, Ranchi</span>
                 </li>
                 <li>
                   <FaPhoneAlt />
@@ -453,7 +625,7 @@ function App() {
           </div>
           
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} Prakash Institute. All rights reserved. | Designed for Excellence.</p>
+            <p>&copy; {new Date().getFullYear()} Prakash Institute. All rights reserved. | Best Coaching Institute in Ranchi.</p>
           </div>
         </div>
       </footer>
