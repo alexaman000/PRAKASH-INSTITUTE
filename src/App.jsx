@@ -136,6 +136,18 @@ function App() {
       title: "Specialized Home Tuition Services in Ranchi",
       subtitle: "Personalized home tutoring for Class 11-12 Maths (Board & JEE) and Class 9-10 Maths & Science. 10+ years expert experience.",
       tag: "Home Tuition"
+    },
+    {
+      src: "/assets/celebration_1.png",
+      title: "Saraswati Puja Celebrations 2026",
+      subtitle: "Prakash Sir, Sagar Sir, and faculty members celebrating Vasant Panchami with divine prayers for our students' success.",
+      tag: "Events & Culture"
+    },
+    {
+      src: "/assets/celebration_2.png",
+      title: "Worshipping the Goddess of Learning",
+      subtitle: "Prakash Institute students and teachers gathered together to seek the blessings of Goddess Saraswati on this auspicious day.",
+      tag: "Puja Celebrations"
     }
   ];
 
