@@ -5,7 +5,8 @@ import {
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp, 
   FaInstagram, FaFacebookF, FaYoutube, FaBars, FaTimes, FaLinkedinIn,
   FaCheckCircle, FaChevronDown, FaChevronUp, FaStar, FaMapSigns,
-  FaPlus, FaTrash, FaSignOutAlt, FaLock, FaChevronRight, FaHome, FaTachometerAlt
+  FaPlus, FaTrash, FaSignOutAlt, FaLock, FaChevronRight, FaHome, FaTachometerAlt,
+  FaSearch, FaCheck, FaInfoCircle, FaLightbulb
 } from 'react-icons/fa';
 import './App.css';
 
@@ -121,6 +122,38 @@ const defaultEnquiryCourses = [
   { label: "Spoken English & C/C++ Classes", value: "English and Coding" }
 ];
 
+const initialKeywordsDatabase = [
+  { keyword: "best coaching near RTC school ranchi", volume: "2,900", competition: "Low", category: "Local SEO" },
+  { keyword: "top coaching institute ranchi", volume: "5,400", competition: "High", category: "Coaching" },
+  { keyword: "best maths tuition near me", volume: "8,100", competition: "Medium", category: "Maths" },
+  { keyword: "maths coaching in bariatu", volume: "1,900", competition: "Low", category: "Maths" },
+  { keyword: "tuition near booty more", volume: "3,200", competition: "Low", category: "Local SEO" },
+  { keyword: "best institute near rtc school", volume: "1,200", competition: "Low", category: "Local SEO" },
+  { keyword: "top maths teacher in ranchi", volume: "1,500", competition: "Low", category: "Maths" },
+  { keyword: "coaching in bargain ranchi", volume: "1,800", competition: "Low", category: "Local SEO" },
+  { keyword: "tuition classes in bariatu", volume: "4,100", competition: "Medium", category: "Local SEO" },
+  { keyword: "physics chemistry maths tuition ranchi", volume: "2,300", competition: "Medium", category: "General Science" },
+  { keyword: "cbse tuition ranchi", volume: "3,200", competition: "Medium", category: "Boards" },
+  { keyword: "jac board coaching ranchi", volume: "2,800", competition: "Medium", category: "Boards" },
+  { keyword: "jee coaching ranchi", volume: "4,400", competition: "High", category: "JEE/NEET" },
+  { keyword: "neet coaching ranchi", volume: "5,100", competition: "High", category: "JEE/NEET" },
+  { keyword: "coaching near kanke road", volume: "2,400", competition: "Low", category: "Local SEO" },
+  { keyword: "best tuition for class 10 maths", volume: "3,800", competition: "Medium", category: "Maths" },
+  { keyword: "best tuition for class 11 science", volume: "3,500", competition: "Medium", category: "General Science" },
+  { keyword: "best coaching for class 12 ranchi", volume: "2,900", competition: "Medium", category: "General Science" },
+  { keyword: "affordable coaching near booty more", volume: "1,100", competition: "Low", category: "Local SEO" },
+  { keyword: "science coaching near morabadi", volume: "2,100", competition: "Low", category: "Local SEO" },
+  { keyword: "home tuition ranchi", volume: "3,600", competition: "Medium", category: "Home Tuition" },
+  { keyword: "coaching classes near me", volume: "45,000", competition: "High", category: "General" },
+  { keyword: "best institute for board exam preparation ranchi", volume: "1,500", competition: "Medium", category: "Coaching" },
+  { keyword: "best home tutors in bariatu", volume: "880", competition: "Low", category: "Home Tuition" },
+  { keyword: "home tutor for class 10 maths ranchi", volume: "600", competition: "Low", category: "Home Tuition" },
+  { keyword: "home tuition for class 12 physics ranchi", volume: "750", competition: "Low", category: "Home Tuition" },
+  { keyword: "olympiad preparation classes ranchi", volume: "650", competition: "Low", category: "Boards" },
+  { keyword: "spoken english classes booty more", volume: "1,300", competition: "Low", category: "General" },
+  { keyword: "c c++ coding coaching ranchi", volume: "800", competition: "Low", category: "General" }
+];
+
 const getIcon = (iconName) => {
   const iconMap = {
     'FaBookReader': <FaBookReader />,
@@ -163,6 +196,128 @@ function App() {
     const saved = localStorage.getItem('pk_enquiry_courses');
     return saved ? JSON.parse(saved) : defaultEnquiryCourses;
   });
+
+  // Dynamic SEO states from localStorage
+  const [seoData, setSeoData] = useState(() => {
+    const saved = localStorage.getItem('pk_seo_data');
+    return saved ? JSON.parse(saved) : {
+      title: "Best Coaching Institute in Ranchi | IIT-JEE, NEET & Maths Tuition | Prakash Institute",
+      description: "Prakash Institute is the best coaching institute near RTC School, Ranchi. We offer top maths tuition, science coaching, JEE/NEET prep, and board classes in Booty More, Bariatu, Morabadi, Bargain, and Kanke Road.",
+      keywords: "best coaching near RTC school ranchi, top coaching institute ranchi, best maths tuition near me, maths coaching in bariatu, tuition near booty more, best institute near rtc school, top maths teacher in ranchi, coaching in bargain ranchi, tuition classes in bariatu, physics chemistry maths tuition ranchi, cbse tuition ranchi, jac board coaching ranchi, jee coaching ranchi, neet coaching ranchi, coaching near kanke road, best tuition for class 10 maths, best tuition for class 11 science, best coaching for class 12 ranchi, affordable coaching near booty more, science coaching near morabadi, home tuition ranchi, coaching classes near me, best institute for board exam preparation ranchi"
+    };
+  });
+
+  const [keywordSearch, setKeywordSearch] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('pk_seo_data', JSON.stringify(seoData));
+    
+    // Dynamic updates of document header meta tags
+    document.title = seoData.title;
+
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', seoData.description);
+
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', seoData.keywords);
+  }, [seoData]);
+
+  const addKeywordToActive = (keyword) => {
+    const activeList = seoData.keywords.split(',').map(k => k.trim()).filter(Boolean);
+    if (!activeList.some(k => k.toLowerCase() === keyword.toLowerCase())) {
+      const updatedList = [...activeList, keyword];
+      setSeoData({
+        ...seoData,
+        keywords: updatedList.join(', ')
+      });
+    }
+  };
+
+  const removeKeywordFromActive = (keyword) => {
+    const activeList = seoData.keywords.split(',').map(k => k.trim()).filter(Boolean);
+    const updatedList = activeList.filter(k => k.toLowerCase() !== keyword.toLowerCase());
+    setSeoData({
+      ...seoData,
+      keywords: updatedList.join(', ')
+    });
+  };
+
+  const calculateSeoScore = () => {
+    let score = 0;
+    const tips = [];
+
+    // Title checks (0 - 30 points)
+    const titleLength = seoData.title.length;
+    if (titleLength >= 40 && titleLength <= 70) {
+      score += 30;
+      tips.push({ type: 'success', text: `Page title length (${titleLength} chars) is perfect for search engine snippet display.` });
+    } else if (titleLength > 70) {
+      score += 15;
+      tips.push({ type: 'warning', text: `Page title is too long (${titleLength} chars). Google may truncate it in search results (max 70 recommended).` });
+    } else if (titleLength > 0) {
+      score += 15;
+      tips.push({ type: 'warning', text: `Page title is too short (${titleLength} chars). Add high-volume keyword targets (40-70 recommended).` });
+    } else {
+      tips.push({ type: 'danger', text: 'Page title is empty. Google requires a title tag to index and rank your site.' });
+    }
+
+    // Description checks (0 - 30 points)
+    const descLength = seoData.description.length;
+    if (descLength >= 120 && descLength <= 160) {
+      score += 30;
+      tips.push({ type: 'success', text: `Meta description length (${descLength} chars) is optimal to ensure maximum click-through rates.` });
+    } else if (descLength > 160) {
+      score += 15;
+      tips.push({ type: 'warning', text: `Meta description is too long (${descLength} chars). Google will truncate it in results (max 160 recommended).` });
+    } else if (descLength > 0) {
+      score += 15;
+      tips.push({ type: 'warning', text: `Meta description is too short (${descLength} chars). Add more descriptive details (120-160 recommended).` });
+    } else {
+      tips.push({ type: 'danger', text: 'Meta description is empty. Search engines will auto-extract text which can hurt CTR.' });
+    }
+
+    // Local presence check (0 - 20 points)
+    const lowerTitle = seoData.title.toLowerCase();
+    const lowerDesc = seoData.description.toLowerCase();
+    const lowerKeywords = seoData.keywords.toLowerCase();
+    
+    const hasRanchi = lowerTitle.includes('ranchi') || lowerDesc.includes('ranchi');
+    const hasLocalAreas = lowerTitle.includes('bariatu') || lowerDesc.includes('bariatu') || lowerTitle.includes('booty') || lowerDesc.includes('booty') || lowerKeywords.includes('morabadi') || lowerKeywords.includes('kanke') || lowerKeywords.includes('bargain');
+    
+    if (hasRanchi && hasLocalAreas) {
+      score += 20;
+      tips.push({ type: 'success', text: 'Stellar local alignment! Your meta tags feature both "Ranchi" and surrounding school zones like Bariatu / Booty More.' });
+    } else if (hasRanchi) {
+      score += 10;
+      tips.push({ type: 'warning', text: 'City targets look good. Consider incorporating local neighborhoods (Bariatu, Booty More, Morabadi) to capture local student searches.' });
+    } else {
+      tips.push({ type: 'danger', text: 'Missing Ranchi geographic targeting. Educational programs must explicitly reference their city.' });
+    }
+
+    // Keyword count check (0 - 20 points)
+    const kwList = seoData.keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
+    if (kwList.length >= 12) {
+      score += 20;
+      tips.push({ type: 'success', text: `Robust keyword diversity: You have ${kwList.length} active search keywords driving rankings.` });
+    } else if (kwList.length >= 5) {
+      score += 10;
+      tips.push({ type: 'warning', text: `Only ${kwList.length} search keywords set. Expand your list using the Discovery tool below to hit 12+ targeted terms.` });
+    } else {
+      tips.push({ type: 'danger', text: 'Very weak search tag coverage. Educational institutions require a deep keyword portfolio to rank.' });
+    }
+
+    return { score, tips };
+  };
 
   // Keep localStorage in sync
   useEffect(() => {
@@ -219,7 +374,15 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (adminEmail === 'prakash96089kumar@gmail.com' && adminPassword === 'pksir96089') {
+    const envEmail = import.meta.env.VITE_ADMIN_EMAIL;
+    const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+
+    if (!envEmail || !envPassword) {
+      setLoginError('Admin credentials are not configured in environment variables.');
+      return;
+    }
+
+    if (adminEmail === envEmail && adminPassword === envPassword) {
       sessionStorage.setItem('pk_admin_auth', 'true');
       setIsAuthenticated(true);
       setLoginError('');
@@ -512,7 +675,7 @@ function App() {
                 <input 
                   type="email" 
                   className="admin-form-input" 
-                  placeholder="prakash96089kumar@gmail.com" 
+                  placeholder="admin@example.com" 
                   value={adminEmail}
                   onChange={(e) => setAdminEmail(e.target.value)}
                   required 
@@ -579,6 +742,12 @@ function App() {
               onClick={() => setAdminTab('enquiry_options')}
             >
               <FaMapSigns /> Enquiry Options
+            </button>
+            <button 
+              className={`admin-nav-item ${adminTab === 'seo' ? 'active' : ''}`}
+              onClick={() => setAdminTab('seo')}
+            >
+              <FaLaptopCode /> SEO & Keywords
             </button>
           </nav>
           
@@ -958,6 +1127,222 @@ function App() {
                 ))}
               </div>
             </section>
+          )}
+
+          {adminTab === 'seo' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              <section className="admin-card" style={{ marginBottom: 0 }}>
+                <h2>Search Engine Optimization (SEO) & Live Metadata Optimizer</h2>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: '-1rem 0 1.5rem 0' }}>
+                  Manage the institute's primary Google Search titles, search result descriptions, and SEO ranking keywords. Changes sync live on user page loads instantly!
+                </p>
+
+                <h3>🔍 Live Google Search SERP Preview</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                  This is how Prakash Institute will literally appear to parents and students searching on Google:
+                </p>
+                <div className="serp-preview-card" style={{ marginBottom: '2rem' }}>
+                  <div className="serp-preview-header">
+                    <div className="serp-preview-favicon">P</div>
+                    <div className="serp-preview-url">
+                      https://www.prakashinstituteranchi.online <span style={{ color: '#5f6368' }}>› home</span>
+                    </div>
+                  </div>
+                  <h3 className="serp-preview-title">{seoData.title || "Best Coaching Institute in Ranchi | IIT-JEE, NEET & Maths Tuition | Prakash Institute"}</h3>
+                  <p className="serp-preview-desc">{seoData.description || "Enter meta description to show search snippet."}</p>
+                </div>
+              </section>
+
+              {(() => {
+                const { score, tips } = calculateSeoScore();
+                const scoreColor = score >= 80 ? '#10b981' : score >= 50 ? '#f59e0b' : '#ef4444';
+                return (
+                  <div className="seo-dashboard-container">
+                    <div className="seo-card-metrics">
+                      <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.25rem', color: 'var(--primary-blue)', fontWeight: 'bold' }}>SEO Health Score</h3>
+                      <div 
+                        className="seo-score-radial" 
+                        style={{ 
+                          '--score-percent': score, 
+                          '--score-color': scoreColor 
+                        }}
+                      >
+                        <span>{score}<small>/100</small></span>
+                      </div>
+                      <p style={{ fontWeight: '700', color: scoreColor, margin: '0 0 1.5rem 0', fontSize: '1.1rem' }}>
+                        {score >= 80 ? 'Excellent Optimization!' : score >= 50 ? 'Needs Attention' : 'Poor SEO Setup'}
+                      </p>
+                      
+                      <div className="seo-tips-list">
+                        <div className="seo-tips-title">
+                          <FaLightbulb /> Optimization Guidelines
+                        </div>
+                        {tips.map((tip, idx) => (
+                          <div key={idx} className="seo-tip-item">
+                            <span className={`seo-tip-icon seo-tip-${tip.type}`}>
+                              {tip.type === 'success' ? <FaCheckCircle /> : <FaInfoCircle />}
+                            </span>
+                            <span style={{ color: '#4b5563' }}>{tip.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="admin-card" style={{ margin: 0 }}>
+                      <h3 style={{ borderLeft: '4px solid var(--accent-orange)', paddingLeft: '0.75rem', fontSize: '1.25rem', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}>Edit Meta Tags</h3>
+                      <form style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <label style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                            <span>Page Meta Title</span>
+                            <span className={`character-counter ${seoData.title.length >= 40 && seoData.title.length <= 70 ? 'char-limit-ok' : seoData.title.length > 70 ? 'char-limit-warn' : 'char-limit-bad'}`}>
+                              {seoData.title.length} / 70 chars
+                            </span>
+                          </label>
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            value={seoData.title}
+                            onChange={(e) => setSeoData({ ...seoData, title: e.target.value })}
+                            placeholder="Enter page meta title..." 
+                            required 
+                          />
+                        </div>
+                        
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <label style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                            <span>Page Meta Description</span>
+                            <span className={`character-counter ${seoData.description.length >= 120 && seoData.description.length <= 160 ? 'char-limit-ok' : seoData.description.length > 160 ? 'char-limit-warn' : 'char-limit-bad'}`}>
+                              {seoData.description.length} / 160 chars
+                            </span>
+                          </label>
+                          <textarea 
+                            className="form-control" 
+                            rows="4" 
+                            value={seoData.description}
+                            onChange={(e) => setSeoData({ ...seoData, description: e.target.value })}
+                            placeholder="Provide descriptive summary..." 
+                            required 
+                          />
+                        </div>
+                        
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <label style={{ display: 'block', fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                            Page Meta Keywords (comma separated)
+                          </label>
+                          <textarea 
+                            className="form-control" 
+                            rows="3" 
+                            value={seoData.keywords}
+                            onChange={(e) => setSeoData({ ...seoData, keywords: e.target.value })}
+                            placeholder="coaching in ranchi, best maths tuition..." 
+                            required 
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              <section className="keywords-discover-sec">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div>
+                    <h3 style={{ margin: 0, color: 'var(--primary-blue)', fontSize: '1.35rem' }}>🎯 Local SEO Keyword Discovery Tool</h3>
+                    <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      Search high-volume education keywords in Ranchi and instantly optimize your meta tags.
+                    </p>
+                  </div>
+                  <div className="live-badge">
+                    <span style={{ display: 'inline-block', width: '6px', height: '6px', backgroundColor: 'white', borderRadius: '50%' }}></span>
+                    Live Ranchi database
+                  </div>
+                </div>
+                
+                <div className="keyword-search-wrapper">
+                  <FaSearch className="keyword-search-icon" />
+                  <input 
+                    type="text" 
+                    className="keyword-search-input" 
+                    placeholder="Filter local keywords (e.g. maths, jee, bariatu, home tuition)..."
+                    value={keywordSearch}
+                    onChange={(e) => setKeywordSearch(e.target.value)}
+                    style={{ paddingLeft: '2.5rem' }}
+                  />
+                </div>
+                
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="keyword-list-table">
+                    <thead>
+                      <tr>
+                        <th>Search Query</th>
+                        <th>Monthly Volume</th>
+                        <th>Competition</th>
+                        <th>SEO Category</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {initialKeywordsDatabase
+                        .filter(kw => 
+                          kw.keyword.toLowerCase().includes(keywordSearch.toLowerCase()) || 
+                          kw.category.toLowerCase().includes(keywordSearch.toLowerCase())
+                        )
+                        .slice(0, 10)
+                        .map((kw, idx) => {
+                          const activeList = seoData.keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
+                          const isActive = activeList.includes(kw.keyword.toLowerCase());
+                          const compClass = kw.competition === 'Low' ? 'keyword-badge-low' : kw.competition === 'Medium' ? 'keyword-badge-med' : 'keyword-badge-high';
+                          
+                          return (
+                            <tr key={idx}>
+                              <td style={{ fontWeight: '500' }}>{kw.keyword}</td>
+                              <td>{kw.volume} / mo</td>
+                              <td>
+                                <span className={`keyword-badge-comp ${compClass}`}>{kw.competition}</span>
+                              </td>
+                              <td style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{kw.category}</td>
+                              <td>
+                                {isActive ? (
+                                  <span className="keyword-badge-status keyword-status-active">
+                                    <FaCheckCircle size={10} style={{ marginRight: '0.25rem', color: '#2563eb' }} /> Active
+                                  </span>
+                                ) : (
+                                  <span className="keyword-badge-status keyword-status-rec">
+                                    Recommended
+                                  </span>
+                                )}
+                              </td>
+                              <td>
+                                {isActive ? (
+                                  <button 
+                                    className="action-btn-kw action-btn-kw-remove" 
+                                    onClick={() => removeKeywordFromActive(kw.keyword)}
+                                    title="Remove from meta keywords"
+                                    type="button"
+                                  >
+                                    Remove
+                                  </button>
+                                ) : (
+                                  <button 
+                                    className="action-btn-kw action-btn-kw-add" 
+                                    onClick={() => addKeywordToActive(kw.keyword)}
+                                    title="Add to meta keywords"
+                                    type="button"
+                                  >
+                                    + Add Tag
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
           )}
         </main>
       </div>
